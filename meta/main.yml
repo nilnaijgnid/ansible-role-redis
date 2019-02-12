@@ -1,0 +1,21 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: nilnaijgnid
+  role_name: redis
+  description: Install redis on Linux.
+  license: "license (BSD, MIT)"
+  min_ansible_version: 2.4
+  platforms:
+    - name: EL
+      versions:
+        - 6
+        - 7
+    - name: CentOS
+      versions:
+        - 6
+        - 7
+  galaxy_tags:
+    - redis
+    - cache

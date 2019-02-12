@@ -1,0 +1,11 @@
+---
+# vars file for ansible
+
+redis_download_url: http://download.redis.io/redis-stable.tar.gz
+redis_port: 6379
+redis_databases_nums: 16
+redis_dump_dir: /var/lib/
+redis_maxclients: 1024
+redis_maxmemory: 8G
+redis_password: password
+redis_conf_path: /etc/redis.conf

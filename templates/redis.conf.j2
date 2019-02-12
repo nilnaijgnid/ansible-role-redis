@@ -1,0 +1,56 @@
+daemonize yes
+pidfile /var/log/redis.pid
+port {{ redis_port }}
+tcp-backlog 512
+bind 0.0.0.0
+timeout 0
+tcp-keepalive 60
+loglevel notice
+logfile "/var/log/redis.log"
+databases {{ redis_databases_nums }}
+stop-writes-on-bgsave-error yes
+rdbcompression yes
+rdbchecksum yes
+dbfilename dump.rdb
+dir {{ redis_dump_dir }}
+slave-serve-stale-data yes
+slave-read-only yes
+repl-diskless-sync no
+repl-diskless-sync-delay 5
+repl-ping-slave-period 10
+repl-timeout 60
+repl-disable-tcp-nodelay yes
+
+repl-backlog-size 50mb
+repl-backlog-ttl 600
+slave-priority 100
+requirepass {{ redis_password }}
+maxclients {{ redis_maxclients }}
+maxmemory {{ redis_maxmemory }}
+maxmemory-policy noeviction
+appendonly yes
+appendfilename appendonly.aof
+appendfsync always
+no-appendfsync-on-rewrite yes
+auto-aof-rewrite-percentage 70
+auto-aof-rewrite-min-size 2000mb
+aof-load-truncated no
+lua-time-limit 5000
+slowlog-log-slower-than 10000
+slowlog-max-len 128
+latency-monitor-threshold 0
+notify-keyspace-events ""
+hash-max-ziplist-entries 512
+hash-max-ziplist-value 64
+list-max-ziplist-entries 512
+list-max-ziplist-value 64
+set-max-intset-entries 512
+zset-max-ziplist-entries 128
+zset-max-ziplist-value 64
+hll-sparse-max-bytes 3000
+activerehashing yes
+client-output-buffer-limit normal 0 0 0
+client-output-buffer-limit slave 256mb 64mb 60
+client-output-buffer-limit pubsub 32mb 8mb 60
+hz 10
+aof-rewrite-incremental-fsync yes

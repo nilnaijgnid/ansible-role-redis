@@ -1,0 +1,49 @@
+---
+# tasks file for ansible
+
+
+# install dependency
+
+
+
+- name: download redis source
+  get_url:
+    url: "{{ redis_download_url }}"
+    dest: /root/redis-stable.tar.gz
+    mode: 0644
+
+- name: unarchive redis tarball
+  unarchive:
+    src: /root/redis-stable.tar.gz
+    dest: /root/
+    mode: 0755
+
+- name: compile and install redis
+  shell: cd /root/redis-stable && make && make install
+
+- name: set redis environment into PATH
+  copy:
+    src: redis.sh
+    dest: /etc/profile.d/redis.sh
+    owner: root
+    group: root
+    mode: 0644
+
+- name: copy redis config file
+  template:
+    src: redis.conf.j2
+    dest: "{{ redis_conf_path }}"
+    owner: root
+    group: root
+    mode: 0644
+
+# start redis
+- name: start redis
+  shell: /usr/local/bin/redis-server {{ redis_conf_path }}
+
+- name: get redis status
+  environment:
+    REDISCLI_AUTH: "{{ redis_password }}"
+  shell: /usr/local/bin/redis-cli -p {{ redis_port }} -a {{ redis_password } ping
+  register: redis_status
+  failed_when: "'PONG' not in redis_statusd.stdout"
